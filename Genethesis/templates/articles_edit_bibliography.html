@@ -19,6 +19,7 @@
                     <div class="card-body pt-2">
                         {{ form.hidden_tag() }}
                         <small class="text-muted">参考书目<strong>一行一条，不含序号</strong>。可以自行输入，也可以通过下方的小工具自动生成。</small>
+                        {{ form.title(class="no-display", value="参考文献", type="text", id="input-title") }}
                         {{ form.content(class="form-control form-control-alternative mt-3", type="text", id="input-content") }}
                         <div class="generate-bibliography">
                             <h4 class="mt-4 mb-4">添加新条目</h4>

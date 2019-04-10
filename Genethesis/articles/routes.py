@@ -574,9 +574,9 @@ def edit_bibliography(article_id):
         flash('参考书目修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=article.id))
     elif request.method == 'GET':
-        if article.bibliography != 'Null':
+        if article.bibliography != '':
             form.content.data = article.bibliography
-    return render_template('articles_edit_bibliography.html', section='我的论文', title='参考文献' + article.title, article=article, form=form)
+    return render_template('articles_edit_bibliography.html', section='我的论文', title='参考文献' + article.title, object={'title': '参考文献', 'titleInput': False}, article=article, form=form)
 
 @articles.route('/articles/<int:article_id>/gratitude', methods=['GET', 'POST'])
 @login_required

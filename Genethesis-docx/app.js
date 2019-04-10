@@ -437,7 +437,7 @@ app.get('/test/docx/:articleID', (req, res) => {
                 .next("Body")
                 .quickFormat()
                 .size(article.innerCoverFontSize * 2)
-                .spacing({"line":article.innerCoverLineSpacing*240})
+                .spacing({"line":article.innerCoverLineSpacing*240, "before": 5040})
                 .center()
                 .font(getFontName(article.innerCoverFont));
             doc.Styles.createParagraphStyle('CoverEs', '西文内封面标题')
@@ -445,7 +445,7 @@ app.get('/test/docx/:articleID', (req, res) => {
                 .next("Body")
                 .quickFormat()
                 .size(article.innerCoverFontSize * 2)
-                .spacing({"line":article.innerCoverLineSpacing*240, "before": 5040})
+                .spacing({"line":article.innerCoverLineSpacing*240})
                 .center()
                 .font(getFontName(article.innerCoverFontAlt));
         }
