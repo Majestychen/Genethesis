@@ -40,7 +40,7 @@ def register():
             os.makedirs(illustrationDic)
         if not os.path.exists(articleDic):
             os.makedirs(articleDic)
-        flash(f'账户 {form.username.data} 已经创建，请登录。', category='success')
+        flash(f'账户 {form.username.data} 已经创建。', category='success')
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form, title='用户注册')
 
@@ -97,8 +97,9 @@ def password_change():
     user = User.query.get(current_user.id)
     user.password = hashed_password
     db.session.commit()
-    flash('密码修改成功，下次登陆请使用新密码。', 'success')
-    return redirect(url_for('users.profile'))
+    logout_user()
+    flash('密码修改成功，请使用新密码登录。', 'success')
+    return redirect(url_for('users.login'))
 
 
 @users.route("/profile/avatar_change", methods=['POST'])

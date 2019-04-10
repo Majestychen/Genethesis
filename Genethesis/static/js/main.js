@@ -551,58 +551,6 @@ if(document.getElementsByClassName('preview').length > 0) {
     })
 }
 
-if (document.getElementById('editorr')) {
-
-    content = $('#input-content').text()
-    var toolbarOptions = [
-        ['bold', 'italic', 'underline'],
-        ['image', 'link']
-    ]
-    var icons = Quill.import('ui/icons');
-    icons['link'] = '<i class="far fa-sticky-note quill-toolbar-icon"></i>';
-    var quill = new Quill('#editor', {
-        modules: {
-            toolbar: toolbarOptions
-        },
-        placeholder: '开始撰写内容...',
-        theme: 'snow'
-    });
-    imageUI = function() {
-        $('#imageModal').modal('show');
-    }
-    var toolbar = quill.getModule('toolbar');
-    toolbar.addHandler('image', imageUI);
-    if (content!='') {
-        quill.setText(content);
-    }
-
-    $('.confirm').on('click', function(e){
-        e.preventDefault();
-        raw = quill.container.firstChild.innerHTML;
-        raw = raw.replace(/<a href="([^"]+)" target="_blank">([^<]+)<\/a>/g, "$2{{footnote:$1}}");
-        raw = raw.replace(/<p>/g,'')
-        raw = raw.replace(/<.p>/g,'\n')
-        raw = raw.replace(/<br>\n/g,'')
-        raw = raw.replace(/<strong><em><u>/g, '{{bold&italic&underline:')
-        raw = raw.replace(/<.u><.em><.strong>/g, '}}')
-        raw = raw.replace(/<strong><em>/g, '{{bold&italic:')
-        raw = raw.replace(/<.em><.strong>/g, '}}')
-        raw = raw.replace(/<strong><u>/g, '{{bold&underline:')
-        raw = raw.replace(/<.u><.strong>/g, '}}')
-        raw = raw.replace(/<em><u>/g, '{{italic&underline:')
-        raw = raw.replace(/<.u><.em>/g, '}}')
-        raw = raw.replace(/<strong>/g, '{{bold:')
-        raw = raw.replace(/<.strong>/g, '}}')
-        raw = raw.replace(/<em>/g, '{{italic:')
-        raw = raw.replace(/<.em>/g, '}}')
-        raw = raw.replace(/<u>/g, '{{underline:')
-        raw = raw.replace(/<.u>/g, '}}')
-        $('#input-content').val(raw)
-        $('.content-form')[0].submit()
-    })
-
-}
-
 var toolbarOptions = [
     ['bold', 'italic', 'underline'],
     ['image', 'link']
@@ -619,6 +567,11 @@ $('.og-content').each(function(i){
         },
         placeholder: '开始撰写内容...',
         theme: 'snow'
+    });
+    var Delta = Quill.import('delta');
+    quill.clipboard.addMatcher (Node.ELEMENT_NODE, function (node, delta) {
+        var plaintext = $ (node).text ();
+        return new Delta().insert (plaintext);
     });
     imageUI = function() {
         $('#imageModal').modal('show');
@@ -698,6 +651,9 @@ $('.confirm').on('click', function(e){
         raw = raw.replace(/<.em>/g, '}}')
         raw = raw.replace(/<u>/g, '{{underline:')
         raw = raw.replace(/<.u>/g, '}}')
+        raw = raw.replace(/&nbsp;/g, '')
+        raw = raw.replace(/&amp;nbsp;/g, '')
+        raw = raw.replace(/&amp;amp;nbsp;/g, '')
         $(this).val(raw)
     })
     $('.content-form')[0].submit()

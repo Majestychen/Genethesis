@@ -476,14 +476,16 @@ def edit_chapter(chapter_id):
         chapter.title = form.title.data
         chapter.content = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
         chapter.tailContent = ''.join(L + '\n' for L in form.tailContent.data.split('\r\n') if L)[:-1]
+        chapter.mainArticle.timeEdited = datetime.now()
+        chapter.timeEdited = datetime.now()
         db.session.commit()
         flash('章节内容修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=chapter.mainArticle.id))
     elif request.method == 'GET':
         form.title.data = chapter.title
-        if chapter.content != 'Null':
+        if chapter.content != '':
             form.content.data = chapter.content
-        if chapter.tailContent != 'Null':
+        if chapter.tailContent != '':
             form.tailContent.data = chapter.tailContent
     return render_template('articles_edit_chapter.html', section='我的论文', title=chapter.title, object=chapter, article=chapter.mainArticle, form=form)
 
@@ -496,14 +498,16 @@ def edit_subchapter(subchapter_id):
         subchapter.title = form.title.data
         subchapter.content = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
         subchapter.tailContent = ''.join(L + '\n' for L in form.tailContent.data.split('\r\n') if L)[:-1]
+        subchapter.mainChapter.mainArticle.timeEdited = datetime.now()
+        subchapter.timeEdited = datetime.now()
         db.session.commit()
         flash('子章节内容修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=subchapter.mainChapter.mainArticle.id))
     elif request.method == 'GET':
         form.title.data = subchapter.title
-        if subchapter.content != 'Null':
+        if subchapter.content != '':
             form.content.data = subchapter.content
-        if subchapter.tailContent != 'Null':
+        if subchapter.tailContent != '':
             form.tailContent.data = subchapter.tailContent
     return render_template('articles_edit_chapter.html', section='我的论文', title=subchapter.title, article=subchapter.mainChapter.mainArticle, object=subchapter, form=form)
 
@@ -515,12 +519,14 @@ def edit_scsubchapter(scsubchapter_id):
     if form.validate_on_submit():
         scsubchapter.title = form.title.data
         scsubchapter.content = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
+        scsubchapter.mainSubChapter.mainChapter.mainArticle.timeEdited = datetime.now()
+        scsubchapter.timeEdited = datetime.now()
         db.session.commit()
         flash('次级子章节内容修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=scsubchapter.mainSubChapter.mainChapter.mainArticle.id))
     elif request.method == 'GET':
         form.title.data = scsubchapter.title
-        if scsubchapter.content != 'Null':
+        if scsubchapter.content != '':
             form.content.data = scsubchapter.content
     return render_template('articles_edit_chapter.html', section='我的论文', title=scsubchapter.title, article=scsubchapter.mainSubChapter.mainChapter.mainArticle, object=scsubchapter, form=form)
 
@@ -535,15 +541,16 @@ def edit_abstract(article_id):
         if article.abstract2Toggle:
             article.abstract2 = ''.join(L + '\n' for L in form.abstract2.data.split('\r\n') if L)[:-1]
         else:
-            article.abstract2 = 'Null'
+            article.abstract2 = ''
+        article.timeEdited = datetime.now()
         db.session.commit()
         flash('摘要修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=article.id))
     elif request.method == 'GET':
         form.toggle.data = article.abstract2Toggle
-        if article.abstract1 != 'Null':
+        if article.abstract1 != '':
             form.abstract1.data = article.abstract1
-        if article.abstract2 != 'Null':
+        if article.abstract2 != '':
             form.abstract2.data = article.abstract2
     return render_template('articles_edit_abstract.html', section='我的论文', title='摘要' + article.title, article=article, form=form)
 
@@ -555,11 +562,12 @@ def edit_introduction(article_id):
     form = chapterContentForm()
     if form.validate_on_submit():
         article.introduction = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
+        article.timeEdited = datetime.now()
         db.session.commit()
         flash('引入修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=article.id))
     elif request.method == 'GET':
-        if article.introduction != 'Null':
+        if article.introduction != '':
             form.content.data = article.introduction
     return render_template('articles_edit_chapter.html', section='我的论文', title='引入' + article.title, object={'title': '引入', 'titleInput': False}, article=article, form=form)
 
@@ -570,6 +578,7 @@ def edit_bibliography(article_id):
     form = chapterContentForm()
     if form.validate_on_submit():
         article.bibliography = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
+        article.timeEdited = datetime.now()
         db.session.commit()
         flash('参考书目修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=article.id))
@@ -585,11 +594,12 @@ def edit_gratitude(article_id):
     form = chapterContentForm()
     if form.validate_on_submit():
         article.gratitude = ''.join(L + '\n' for L in form.content.data.split('\r\n') if L)[:-1]
+        article.timeEdited = datetime.now()
         db.session.commit()
         flash('致谢辞修改成功。', 'success')
         return redirect(url_for('articles.single_article', article_id=article.id))
     elif request.method == 'GET':
-        if article.gratitude != 'Null':
+        if article.gratitude != '':
             form.content.data = article.gratitude
     return render_template('articles_edit_chapter.html', section='我的论文', title='致谢' + article.title, object={'title': '致谢辞', 'titleInput': False}, article=article, form=form)
 
