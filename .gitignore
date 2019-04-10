@@ -2,3 +2,5 @@ Genethesis/site.db
 .vscode/settings.json
 Genethesis-docx/node_modules
 venv
+
+**/.DS_Store
