@@ -2,5 +2,8 @@ Genethesis/site.db
 .vscode/settings.json
 Genethesis-docx/node_modules
 venv
-
+Genethesis/static/articles/*
+Genethesis/static/illustrations/*
+Genethesis/static/avatars/*
+Genethesis/static/signatures/*
 **/.DS_Store
