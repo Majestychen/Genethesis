@@ -61,7 +61,7 @@
                         {% if article.status == True %}
                           <button class="btn-none articles-action delete pr-2 pl-0" data-id="{{ article.id }}"><i class="fas fa-trash-alt text-danger"></i></button>
                           <a href="{{ url_for('articles.revitalize', article_id=article.id) }}" class="articles-action restore pr-2"><i class="fas fa-gavel text-warning"></i></a>
-                          <a href="{{ url_for('static', filename='articles/'+current_user.id|string+'/'+article.id|string+'thesis.docx') }}" download="{{ article.title+'.docx' }}" class="articles-action download pr-2"><i class="fas fa-cloud-download-alt text-success"></i></a>
+                          <a href="{{ url_for('static', filename='articles/'+current_user.id|string+'/'+article.id|string+'/thesis.docx') }}" download="{{ article.title+'.docx' }}" class="articles-action download pr-2"><i class="fas fa-cloud-download-alt text-success"></i></a>
                         {% else %}
                           <a href="{{ url_for('articles.finalize', article_id=article.id) }}" class="articles-action finalize pr-2"><i class="fas fa-check-circle text-success"></i></a>
                           <a href="{{ url_for('articles.edit_settings', article_id=article.id) }}" class="articles-action settings pr-2"><i class="fas fa-cog text-primary"></i></a>
