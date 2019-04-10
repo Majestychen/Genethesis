@@ -1,0 +1,71 @@
+{% extends 'layout_out.html' %}
+
+{% block content %}
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-3">
+              <div class="text-muted text-center mt-2 mb-1"><h2>用户登录</h2></div>
+            </div>
+            <div class="card-body px-lg-5 py-lg-5">
+              <form role="form" action="" method="POST">
+                  {{ form.hidden_tag() }}
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                  {% if form.username.errors %}
+                      {{ form.username(class="form-control is-invalid", placeholder="用户名",type="text") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.username.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.username(class="form-control", placeholder="用户名", type="text") }}
+                  {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                  {% if form.password.errors %}
+                      {{ form.password(class="form-control is-invalid", placeholder="密码",type="password") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.password.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.password(class="form-control", placeholder="密码", type="password") }}
+                  {% endif %}                  </div>
+                </div>
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                  {{ form.remember(class="custom-control-input", id=" customCheckLogin") }}
+                  {{ form.remember.label(class="custom-control-label text-muted", for=" customCheckLogin") }}
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary my-4">登录</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <a href="#" class="text-light"><small>忘记密码？</small></a>
+            </div>
+            <div class="col-6 text-right">
+              <a href="{{url_for('users.register')}}" class="text-light"><small>新用户注册</small></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock content %}

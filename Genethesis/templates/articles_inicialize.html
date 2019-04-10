@@ -1,0 +1,35 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2">论文大纲初始化</h3>
+                    <small class="hidden" id="articleID">{{ article_id }}</small>
+                    <small class="text-muted pl-1">请根据已经在本地撰写好的论文内容，输入<strong> 正文部分 </strong>的框架结构。确认之后如果需要改动，也可以通过内容卡片逐一修改，但本页面请谨慎刷新，刷新会导致本页所有内容丢失。</small>
+                    <br>
+                    <small class="text-warning pl-3">Alpha测试0.1.1版：目前仍未加入卡片的增减功能，因此论文框架目前只能在这里确认。完成之后，只能修改章节名称，无法增删章节。</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div>
+            <div class="card-body tree pt-2">
+                <strong>正文章节总数:</strong>
+                <input type="text" id="chapter-total-number" class="mb-3 mt-0 pt-0" placeholder="请输入整数...">
+
+            </div>
+            <div class="card-footer py-4">
+                <div class="text-right">
+                    <button class="btn btn-primary confirm-index">确认大纲</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock content%}

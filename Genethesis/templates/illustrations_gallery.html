@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/jquery.fancybox.min.css">
+    <link type="text/css" href="../static/css/main.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    {% if allLoaded == True %}
+        <div class="hidden" id="all-loaded"></div>
+    {% endif %}
+
+    <div class="grid">
+        {% for illustration in illustrations %}
+            <div class="grid-item">
+                <a href="{{ url_for('static', filename='illustrations/' + current_user.id|string + '/' + illustration) }}" data-fancybox="gallery" data-caption="{{ illustration }}">
+                    <img class="" src="{{ url_for('static', filename='illustrations/' + current_user.id|string + '/' + illustration) }}" alt="">
+                </a>
+                <i class="fas fa-copy clipboard-trigger" data-clipboard-text="{{ 'static/illustrations/' + current_user.id|string + '/' + illustration }}"></i>
+                <i class="fas fa-trash-alt illustration-delete" data-filename="{{ illustration }}"></i>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="hidden">
+        <a href="{{ url_for('illustrations.gallery', page=page+1) }}" class="btn btn-primary mt-4" id="btn-load-more">加载更多</a>
+    </div>
+
+    <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../static/js/jquery.fancybox.min.js"></script>
+    <script src="../static/js/isotope.pkgd.min.js"></script>
+    <script src="../static/js/clipboard.min.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+</html>

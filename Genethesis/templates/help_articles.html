@@ -1,0 +1,69 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2" data-toc-skip>论文添加与编辑</h3>
+                    <small class="text-muted">支持文档</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div> <!-- End of Card Header -->
+            <div class="card-body pt-2">
+                <div class="row">
+                    <div class="col-md-9" id="main-doc">
+
+                        <h2 class="mt-0 mb-4" id="1">如何添加论文？</h2>
+                        <p class="text-muted mb-2">在登陆后，即可在左侧的边栏中点击“我的论文”，进入该用户所有论文的列表。点击列表右上方的按钮“新建论文”，即可进入新论文的设置。<strong>在Alpha测试阶段，系统内置了南大金陵西语系双语论文的格式要求，只需选择语言即可。如果有特殊需求，可以在右上角的开关处打开高级模式，自定义文档样式。</strong></p>
+                        <img src="{{ url_for('static', filename='img/doc/new_article.png') }}" class="rounded" alt="">
+                        <p class="text-muted mb-2">请注意第二语言标题及关键词的填写。例如如果论文语言是中文，则“标题”处填写中文标题，”第二语言“处填写西班牙文标题，关键词也同样处理。当然，如果论文没有第二语言，可将这两处留空。</p>
+                        <p class="text-muted mb-2">在高级模式下，用户可以调节页边距、字体、字号、行距、段前后距、缩进等多项自定义内容。如果在高级模式下，某一项设置留空，系统会以默认设置保存，但用户仍然可以在添加完成后对这些数据进行调节。</p>
+                        <p class="text-muted mb-2">完成所有设置后，即可点击“确认信息”按钮，系统会自动返回论文列表的界面，此时应以可以看到新的论文条目。</p>
+                        
+                        <h2 class="mt-5 mb-4" id="2">如何编辑论文？</h2>
+                        <p class="text-muted mb-2">在新建的论文条目的“操作”列，默认有四个按钮，分别代表“完成论文”、“更改论文设置”、“编辑论文”、“下载预览”。通过点击笔尖图标，或点击论文标题，即可进入论文编辑界面。在首次编辑论文时，系统会自动进入大纲撰写模式。</p>
+                        <h3 class="mt-3 mb-2" id="3">初始化论文大纲</h3>
+                        <p class="text-muted mb-0">如下图所示，首先输入正文章节总数，接着可以对每一章节的子章节、次级子章节进行增减，并填写标题。全部填写完成后，点击“确认大纲”按钮，系统会自动生成对应的章节，内容默认为空，以便随后编辑。<strong class="text-warning">Alpha测试0.1.1版：大纲中无需加入“引入”章节，该卡片系统会自动生成在正文所有卡片之前。同理，摘要、参考文献、致谢的卡片也无须手动添加。</strong></p>
+                        <img class="mb-0 pb-0" src="{{ url_for('static', filename='img/doc/inicialization.png') }}" class="rounded" alt="">
+                        <h3 class="mt-3 mb-2" id="4">卡片式论文撰写</h3>
+                        <p class="text-muted mb-0">确认大纲后，系统会自动跳转至论文的编辑界面，也可在“我的论文”的论文列表中通过点击对应的笔尖图标进入。在该界面中，用户可以看到该论文所有的卡片。鼠标悬停在卡片上时，卡片将会反转到背面，显示该章节的预览内容。如果某章节包含子章节，该章节卡片将以堆叠形式出现（如下图章节2），点击该卡片将可以看到该章节下所有子章节、次级子章节的卡片。</p>
+                        <img class="mb-2 pb-2" src="{{ url_for('static', filename='img/doc/article_cards.png') }}" class="rounded" alt="">
+                        <p class="text-muted mb-2"><strong class="text-warning">Alpha测试0.1.1版：字数统计为初步测试功能，显示内容为该章节下所有子章节、次级子章节的字数（或单词数）相加值。目前程序猿仍在测试该功能，数据仅供参考。</strong></p>
+                        <h2 class="mt-5 mb-2" id="5">如何使用章节编辑器？</h2>
+                        <h3 class="mt-3 mb-2" id="6">富文本编辑</h3>
+                        <p class="text-muted mb-2">文本编辑器使用了所见即所得的富文本编辑方式，在编辑器上方从左到右设有加粗、斜体、下划线、图片、脚注功能按钮，其中，图片功能目前采用代码插入的方式，在点击插入图片的按钮后，会有详细说明以及教程弹出。<strong class="text-warning">Alpha测试0.1.1版：由于目前的一个系统内部问题，请勿尝试对有脚注标记的文字进行加粗、斜体和下划线的操作，否则将会出现令人意想不到的后果。</strong></p>
+                        <p class="text-muted mb-2">文本编辑器上方的章节标题其实是可以编辑的，会和章节内容一起上传。虽然看起来不大像。设计狮还在思考怎么显得明确一点。</p>
+                        <h3 class="mt-3 mb-2" id="7">摘要编辑器</h3>
+                        <p class="text-muted mb-2">右上角的“双语摘要”开关可以帮助用户调整摘要的语种数量。<strong class="text-warning">Alpha测试0.1.0版：内部测试阶段系统内置南大金陵西语系论文要求，摘要1为中文，摘要2为西语。</strong></p>
+                        <h3 class="mt-3 mb-2" id="8">多级章节编辑器</h3>
+                        <p class="text-muted mb-0">如果某一章节（或子章节）下仍有子章节，则其子章节结构会在章节内容编辑器下方显示，同时会显示章节尾部内容编辑器，如下图。最终论文将显示为：章节头部内容 - 所有子级章节内容 - 章节尾部内容。例如，章节头部内容为“这个问题我们接下来分三点讨论。”，章节尾部内容为“以上三点共同证明了这一原理。”</p>
+                        <img class="mb-2 pb-2" src="{{ url_for('static', filename='img/doc/edit_chapter.png') }}" class="rounded" alt="">
+                        <h3 class="mt-3 mb-2" id="9">参考书目编辑器</h3>
+                        <p class="text-muted mb-0">参考书目不采用富文本编辑器，格式为一行一条，不含序号。可以自行输入，也可以通过下方的小工具自动生成。通过选择合适的语言和文献种类，右侧的表格会自动变更内容，收集所需的信息。填写完成后，点击“添加条目”按钮，系统将自动在文本框的最后一行添加新条目。<strong class="text-warning">Alpha测试0.1.0版：为了尽量简化，暂未提供非中文条目同文章多作者的条目模板。建议添加后根据格式自行调整。</strong></p>
+                        <img class="mb-2 pb-2" src="{{ url_for('static', filename='img/doc/edit_bibliography.png') }}" class="rounded" alt="">
+
+
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sticky-top toc-container">
+                            <h4 class="mb-3">文章导航</h4>
+                            <nav id="toc"></nav>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div> <!-- End of Card Body -->
+
+          </div>
+        </div>
+      </div>
+
+{% endblock content%}

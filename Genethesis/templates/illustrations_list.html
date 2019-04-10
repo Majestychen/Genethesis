@@ -1,0 +1,67 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+<div class="container-fluid mt--7">
+        <div class="row">
+                <div class="col">
+                  <div class="card shadow">
+                        <div class="card-header bg-white border-0">
+                                <div class="row align-items-center">
+                                  <div class="col-8">
+                                    <h3 class="mb-0"><span id="counter-text">我的所有插图</span> (<span id="counter-number">{{count}}</span>)</h3>
+                                  </div>
+                                  <div class="col-4 text-right">
+                                    <button class="btn btn-sm btn-primary" id="illustration-upload">上传插图</button>
+                                  </div>
+                                </div>
+                                <div class="progress mt-3 mb-2 hidden">
+                                    <div class="progress-bar" id="illustration-upload-progress" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </div>
+                    
+                    <div class="card-body">
+                        <div class="grid">
+                            {% for illustration in illustrations %}
+                                <div class="grid-item" data-filename="{{ illustration }}">
+                                    <a href="{{ url_for('static', filename='illustrations/' + current_user.id|string + '/' + illustration) }}" data-fancybox="gallery" data-caption="{{ illustration }}">
+                                        <img class="" src="{{ url_for('static', filename='illustrations/' + current_user.id|string + '/' + illustration) }}" alt="">
+                                    </a>
+                                    <i class="fas fa-copy clipboard-trigger" data-clipboard-text="{{ '../Genethesis/static/illustrations/' + current_user.id|string + '/' + illustration }}"></i>
+                                    <i class="fas fa-trash-alt illustration-delete" data-filename="{{ illustration }}"></i>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary mt-5" id="btn-load-more">加载更多</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer py-4">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <form class="is-illustration-upload-form" action="{{url_for('illustrations.upload')}}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    {{ form.hidden_tag() }}
+                    {{ form.illustrations(class="form-control-file is-illustration-upload") }}
+                    <button class="is-illustration-upload-button" type="submit">Upload illustration</button>
+                </div>
+            </form>
+
+            <script>
+
+            /* Upload Illustration */
+            document.getElementById('illustration-upload').addEventListener('click', function() {
+                document.getElementsByClassName("is-illustration-upload")[0].click();
+            });
+
+            document.getElementsByClassName("is-illustration-upload")[0].addEventListener("change", function() {
+                document.getElementsByClassName("is-illustration-upload-form")[0].submit();
+            });
+
+            </script>
+
+{% endblock content%}

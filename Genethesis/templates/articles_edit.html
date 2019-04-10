@@ -1,0 +1,177 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2">{{ article.title }} 的所有卡片</h3>
+                    <small class="hidden" id="articleID">{{ article_id }}</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div>
+            <div class="card-body pt-2">
+                <div class="mb-3 mt-0">
+                    <a href="{{ url_for('articles.edit_abstract', article_id=article.id) }}">
+                    <div class="card card-stats mb-4 mb-lg-0 bg-sc-sub-chapter">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h2 font-weight-bold mb-0">摘要</span>
+                                    <br>
+                                    <small class="text-muted">{{ article.abstract1| truncate(255) | getHTML | safe }}</small>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                <div class="mb-3 mt-0">
+                    <a href="{{ url_for('articles.edit_introduction', article_id=article.id) }}">
+                    <div class="card card-stats mb-4 mb-lg-0 bg-sc-sub-chapter">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h2 font-weight-bold mb-0">引入</span>
+                                    <br>
+                                    <small class="text-muted">{{ article.introduction| truncate(255) | getHTML | safe }}</small>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+
+                    {% for chapter in article.chapters|sort(attribute='chapterNumber') %}
+                        <div class="mb-3">
+                            <a href="{{ url_for('articles.edit_chapter', chapter_id=chapter.id) }}">
+                            <div class="card card-stats mb-4 mb-lg-0 bg-chapter">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">第 {{ chapter.chapterNumber }} 章节</h5>
+                                            <span class="h2 font-weight-bold mb-0">{{ chapter.title }}</span>
+                                            <br>
+                                            <small class="text-muted">{{ chapter.content| truncate(255) | getHTML | safe }}</small>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+                                        {% if chapter.subChapters|length == 0 %}
+                                            <span class="text-warning mr-2">没有子章节</span>                                        
+                                        {% else %}
+                                            <span class="text-success mr-2">共 {{ chapter.subChapters|length }} 子章节</span>
+                                        {% endif %}
+                                    </p>
+                                    {% for subchapter in chapter.subChapters|sort(attribute='subChapterNumber') %}
+                                        <div class="mb-3 mt-3">
+                                            <a href="{{ url_for('articles.edit_subchapter', subchapter_id=subchapter.id) }}">
+                                                <div class="card card-stats mb-4 mb-lg-0 bg-sub-chapter">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h5 class="card-title text-uppercase text-muted mb-0">第 {{ subchapter.subChapterNumber }} 子章节</h5>
+                                                            <span class="h2 font-weight-bold mb-0">{{ subchapter.title }}</span>
+                                                            <br>
+                                                            <small class="text-muted">{{ subchapter.content | truncate(255) | getHTML | safe }}</small>
+                                                        </div>
+                                                    </div>
+                                                    <p class="mt-3 mb-0 text-muted text-sm">
+                                                        {% if subchapter.scSubChapters|length == 0 %}
+                                                            <span class="text-warning mr-2">没有次级子章节</span>                                        
+                                                        {% else %}
+                                                            <span class="text-success mr-2">共 {{ subchapter.scSubChapters|length }} 次级子章节</span>
+                                                        {% endif %}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                            {% for scsubchapter in subchapter.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                                                <div class="mb-3 mt-0 ml-3">
+                                                    <a href="{{ url_for('articles.edit_scsubchapter', scsubchapter_id=scsubchapter.id) }}">
+                                                    <div class="card card-stats mb-4 mb-lg-0 bg-sc-sub-chapter">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <h5 class="card-title text-uppercase text-muted mb-0">第 {{ scsubchapter.scSubChapterNumber }} 次级子章节</h5>
+                                                                    <span class="h2 font-weight-bold mb-0">{{ scsubchapter.title }}</span>
+                                                                    <br>
+                                                                    <small class="text-muted">{{ scsubchapter.content| truncate(255) | getHTML | safe }}</small>
+                                                                </div>
+                                                            </div>
+                                                            <p class="mt-3 mb-0 text-muted text-sm">
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                {% endfor %}
+                <div class="mb-3 mt-0">
+                    <a href="{{ url_for('articles.edit_bibliography', article_id=article.id) }}">
+                    <div class="card card-stats mb-4 mb-lg-0 bg-sc-sub-chapter">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h2 font-weight-bold mb-0">参考文献</span>
+                                    <br>
+                                    <small class="text-muted">{{ article.bibliography| truncate(255) | safe }}</small>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div class="mb-3 mt-0">
+                    <a href="{{ url_for('articles.edit_gratitude', article_id=article.id) }}">
+                    <div class="card card-stats mb-4 mb-lg-0 bg-sc-sub-chapter">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h2 font-weight-bold mb-0">致谢</span>
+                                    <br>
+                                    <small class="text-muted">{{ article.gratitude| truncate(255) | getHTML | safe }}</small>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                <div style="display: none;">
+                {% for chapter in article.chapters|sort(attribute='chapterNumber') %}
+                    <p>{{ chapter.chapterNumber }} {{ chapter.title }}</p>
+                    {% for subchapter in chapter.subChapters|sort(attribute='subChapterNumber') %}
+                        <p class="ml-3">{{ subchapter.subChapterNumber }} {{ subchapter.title }}</p>
+                        {% for scsubchapter in subchapter.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                            <p class="ml-5">{{ scsubchapter.scSubChapterNumber }} {{ scsubchapter.title }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}     
+                </div>
+
+            </div>
+            <div class="card-footer py-4 text-right">
+                <button type="button" class="btn btn-primary articles-action preview" data-id="{{ article.id }}">预览文章</button>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock content%}

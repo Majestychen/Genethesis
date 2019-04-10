@@ -1,0 +1,112 @@
+{% extends 'layout_out.html' %}
+
+{% block content %}
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <!-- Table -->
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-3">
+              <div class="text-muted text-center mt-2 mb-1"><h2>用户注册</h2></div>
+            </div>
+            <div class="card-body px-lg-5 py-lg-5">
+              <form role="form" action="" method="POST">
+                  {{ form.hidden_tag() }}
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                  {% if form.username.errors %}
+                      {{ form.username(class="form-control is-invalid", placeholder="用户名",type="text") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.username.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.username(class="form-control", placeholder="用户名", type="text") }}
+                  {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                  {% if form.email.errors %}
+                      {{ form.email(class="form-control is-invalid", placeholder="电子邮箱",type="text") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.email(class="form-control", placeholder="电子邮箱", type="text") }}
+                  {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                  {% if form.password.errors %}
+                      {{ form.password(class="form-control is-invalid", placeholder="密码",type="password") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.password.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.password(class="form-control", placeholder="密码", type="password") }}
+                  {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                  {% if form.confirmPassword.errors %}
+                      {{ form.confirmPassword(class="form-control is-invalid", placeholder="确认密码",type="password") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.confirmPassword.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.confirmPassword(class="form-control", placeholder="确认密码", type="password") }}
+                  {% endif %}
+                  </div>
+                </div>
+                <div class="row my-4">
+                  <div class="col-12">
+                    <div class="custom-control custom-control-alternative custom-checkbox">
+                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                      <label class="custom-control-label" for="customCheckRegister">
+                        <span class="text-muted">我同意 <a href="#">隐私协议</a></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary mt-4 disabled" id="register">创建账户</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-right">
+              <a href="{{url_for('users.login')}}" class="text-light"><small>已有账户？直接登陆</small></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

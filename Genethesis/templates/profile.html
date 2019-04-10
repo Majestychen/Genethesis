@@ -1,0 +1,304 @@
+{% extends 'layout_in.html' %}  
+
+{% block modal %}
+
+    <div class="modal fade" id="passwordResetModal" tabindex="-1" role="dialog" aria-labelledby="passwordResetModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="passwordResetModalLabel">用户密码修改</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/password_change" method="POST">
+              <div class="modal-body pt-0 pb-0">
+                {{ pw_change_form.hidden_tag() }}
+                {{ pw_change_form.oldPw.label(class="form-control-label") }}
+                {{ pw_change_form.oldPw(class="form-control form-control-alternative mb-3", id="input-old-pw") }}
+                {{ pw_change_form.newPw.label(class="form-control-label") }}
+                {{ pw_change_form.newPw(class="form-control form-control-alternative mb-3", id="input-new-pw") }}
+                {{ pw_change_form.confirmNewPw.label(class="form-control-label") }}
+                {{ pw_change_form.confirmNewPw(class="form-control form-control-alternative mb-0", id="input-conf-pw") }}
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+              <button type="submit" class="btn btn-primary">确认密码修改</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+{% endblock modal %}
+
+{% block content %}
+  <!-- Page content -->
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <div class="avatar-container">
+                    <img src="{{ url_for('static', filename='avatars/'+current_user.avatar) }}" class="rounded-circle">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4 pointer-event-none">
+            </div>
+            <div class="card-body pt-0 pt-md-4 pointer-event-none">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">{{ current_user.completedArticles()|length }}</span>
+                      <span class="description">已完成论文数</span>
+                    </div>
+                    <div>
+                      <span class="heading">{{ current_user.incompletedArticles()|length }}</span>
+                      <span class="description">未完成论文数</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                {% if current_user.firstName and current_user.lastName %}
+                <h3>{{ current_user.lastName }}{{ current_user.firstName }}</h3>
+                {% else %}
+                <h3>
+                  {{ current_user.username }}
+                </h3>
+                {% endif %}
+                <div class="h5 font-weight-300">
+                  注册日期：{{ current_user.timeCreated.strftime('%m/%d, %Y') }}
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i>{{ current_user.faculty }}, {{ current_user.grade }}
+                </div>
+                <div>
+                  <i class="ni education_hat mr-2"></i>{{ current_user.university }}
+                </div>
+                <hr class="my-4" />
+                {% if current_user.signature %}
+                    <a href="#!" class="change-signature"><i class="fas fa-signature"></i> 修改签名</a>
+                    <img src="{{ url_for('static', filename='signatures/' + current_user.signature) }}" alt="" class="signature-img mt-3">
+                {% else %}
+                    </i><a href="#!" class="change-signature"><i class="fas fa-plus"></i> 添加签名</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">我的账户</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <button class="btn btn-sm btn-warning" id="change-password" data-toggle="modal" data-target="#passwordResetModal">修改密码</button>
+                  <button class="btn btn-sm btn-primary" id="toggle-edit-info">编辑信息</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+            <form role="form" action="" method="POST">
+                {{ form.hidden_tag() }}
+                <h6 class="heading-small text-muted mb-4">基本信息</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">用户名</label>
+                        <p class="old-info">{{ current_user.username }}</p>
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-alternative is-invalid", placeholder="用户名",type="text", id="input-username") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control form-control-alternative hidden", placeholder="用户名", type="text", id="input-username") }}
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">电子邮箱</label>
+                        <p class="old-info">{{ current_user.email }}</p>
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-alternative is-invalid", placeholder="电子邮箱",type="text", id="input-email") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-alternative hidden", placeholder="电子邮箱", type="text", id="input-email") }}
+                        {% endif %}                      
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">姓</label>
+                        <p class="old-info">{% if current_user.lastName %}{{ current_user.lastName }}{% else %}未定义{% endif %}</p>
+                        {% if form.lastName.errors %}
+                            {{ form.lastName(class="form-control form-control-alternative is-invalid", placeholder="姓",type="text", id="input-last-name") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.lastName.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.lastName(class="form-control form-control-alternative hidden", placeholder="姓", type="text", id="input-last-name") }}
+                        {% endif %}                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-first-name">名</label>
+                        <p class="old-info">{% if current_user.firstName %}{{ current_user.firstName }}{% else %}未定义{% endif %}</p>
+                        {% if form.firstName.errors %}
+                            {{ form.firstName(class="form-control form-control-alternative is-invalid", placeholder="名",type="text", id="input-first-name") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.firstName.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.firstName(class="form-control form-control-alternative hidden", placeholder="名", type="text", id="input-first-name") }}
+                        {% endif %}                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">学历信息</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-university">大学</label>
+                        <p class="old-info">{{ current_user.university }}</p>
+                        {% if form.university.errors %}
+                            {{ form.university(class="form-control form-control-alternative is-invalid", placeholder="大学名称",type="text", id="input-university") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.university.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.university(class="form-control form-control-alternative hidden", placeholder="大学名称", type="text", id="input-university") }}
+                        {% endif %}                      
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-8">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-faculty">院系</label>
+                        <p class="old-info">{{ current_user.faculty }}</p>
+                        {% if form.faculty.errors %}
+                            {{ form.faculty(class="form-control form-control-alternative is-invalid", placeholder="院系名称",type="text", id="input-faculty") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.faculty.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.faculty(class="form-control form-control-alternative hidden", placeholder="院系名称", type="text", id="input-faculty") }}
+                        {% endif %}                      
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-grade">年级</label>
+                        <p class="old-info">{{ current_user.grade }}</p>
+                        {% if form.grade.errors %}
+                            {{ form.grade(class="form-control form-control-alternative is-invalid", placeholder="年级",type="text", id="input-grade") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.grade.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.grade(class="form-control form-control-alternative hidden", placeholder="年级", type="text", id="input-grade") }}
+                        {% endif %}                      
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Description -->
+                <h6 class="heading-small text-muted mb-4">个人简介</h6>
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <p class="old-info">{{ current_user.selfIntro }}</p>
+                    {{ form.selfIntro(class="form-control form-control-alternative hidden", placeholder="这是一个textfield而不是input，要多写一行css，程序猿不开心。", type="text", id="input-self-intro", rows="4") }}
+                  </div>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary btn-lg hidden" id="submit-edit-info">更新信息</button>
+                </div>
+              </form>
+              <form class="is-avatar-upload-form" action="{{url_for('users.avatar_change')}}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    {{ avatar_form.hidden_tag() }}
+                    {{ avatar_form.avatar(class="form-control-file is-avatar-upload") }}
+                    <button class="is-avatar-upload-button" type="submit">Change Avatar</button>
+                </div>
+            </form>
+            <form class="is-signature-upload-form" action="{{url_for('users.signature_change')}}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    {{ sig_form.hidden_tag() }}
+                    {{ sig_form.signature(class="form-control-file is-signature-upload") }}
+                    <button class="is-signature-upload-button" type="submit">Change Signature</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if form.errors %}
+      <script>
+            oldInfoFields = document.getElementsByClassName('old-info');
+            for (i=0; i<oldInfoFields.length; i++) {
+                oldInfoFields[i].classList.add('hidden');
+                oldInfoFields[i].nextElementSibling.classList.remove('hidden');
+            };
+            document.getElementById('toggle-edit-info').innerHTML = '取消编辑';
+            document.getElementById('submit-edit-info').classList.remove('hidden');
+            document.getElementById('toggle-edit-info').classList.add('editing');
+      </script>
+      {% endif %}
+
+      <script>
+            /* Upload Avatar */
+            document.getElementsByClassName('avatar-container')[0].addEventListener('click', function() {
+                document.getElementsByClassName("is-avatar-upload")[0].click();
+            });
+
+            document.getElementsByClassName("is-avatar-upload")[0].addEventListener("change", function() {
+                document.getElementsByClassName("is-avatar-upload-form")[0].submit();
+            });
+
+            /* Upload Signature */
+            document.getElementsByClassName('change-signature')[0].addEventListener('click', function() {
+                document.getElementsByClassName("is-signature-upload")[0].click();
+            });
+
+            document.getElementsByClassName("is-signature-upload")[0].addEventListener("change", function() {
+                document.getElementsByClassName("is-signature-upload-form")[0].submit();
+            });
+      </script>
+
+{% endblock content %}

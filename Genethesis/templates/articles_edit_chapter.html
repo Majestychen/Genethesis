@@ -1,0 +1,78 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<form action="" method="POST" class="content-form">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2">章节编辑：{{ object.title }} </h3>
+                    <small class="text-muted">论文 <a href="{{ url_for('articles.single_article', article_id=article.id) }}"><strong>{{ article.title }}</strong></a></small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div>
+            <div class="card-body pt-2">
+                {{ form.hidden_tag() }}
+                {% if object.titleInput != false %}
+                  <small class="text-muted">下面这个标题其实是可以编辑的，虽然看起来不大像。设计狮还在思考怎么显得明确一点。</small>
+                {% endif %}
+                <h4 class="mb-3 mt-1">{% if object.chapterNumber %}{{ object.chapterNumber }}. {% endif %}
+                {% if object.mainChapter %}{{ object.mainChapter.chapterNumber }}.{{ object.subChapterNumber }}. {% endif %}
+                {% if object.mainSubChapter %}{{ object.mainSubChapter.mainChapter.chapterNumber }}.{{ object.mainSubChapter.subChapterNumber }}.{{ object.scSubChapterNumber }}. {% endif %} 
+                {% if object.titleInput != false %}
+                
+                  {% if form.title.errors %}
+                      {{ form.title(class="chapter-title-change is-invalid", placeholder="章节标题",type="text", id="input-title") }}
+                      <div class="invalid-feedback pl-0 pt-0">
+                          {% for error in form.title.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.title(class="chapter-title-change", placeholder="章节标题", type="text", id="input-title") }}
+                  {% endif %}
+                      
+                {% else %}
+                  {{ form.title(class="no-display", value="引入", type="text", id="input-title") }}
+                {% endif %}</h4>
+
+                {{ form.content(class="form-control form-control-alternative og-content", type="text", id="input-content", placeholder="章节头部内容") }}
+                <div id="editor-1" cols="30" rows="10"></div>
+                {% if object.subChapters %}
+                    <div class="ml-5 mt-4 mb-4">
+                      {% for subchapter in object.subChapters|sort(attribute='subChapterNumber') %}
+                        <h4 class="mb-1">{{ subchapter.mainChapter.chapterNumber }}.{{ subchapter.subChapterNumber }} {{ subchapter.title }}</h4>
+                        {% for scsubchapter in subchapter.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                          <h4 class="mb-1 ml-5">{{ scsubchapter.mainSubChapter.mainChapter.chapterNumber }}.{{ scsubchapter.mainSubChapter.subChapterNumber }}.{{ scsubchapter.scSubChapterNumber }} {{ scsubchapter.title }}</h4>
+                        {% endfor %}
+                      {% endfor %}
+                    </div>
+                    {{ form.tailContent(class="form-control form-control-alternative og-content", type="text", id="input-tail-content", placeholder="章节尾部内容") }}
+                    <div id="editor-2" cols="30" rows="10"></div>
+                {% elif object.scSubChapters %}
+                    <div class="ml-5 mt-4 mb-4">
+                      {% for scsubchapter in object.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                        <h4 class="mb-1">{{ scsubchapter.mainSubChapter.mainChapter.chapterNumber }}.{{ scsubchapter.mainSubChapter.subChapterNumber }}.{{ scsubchapter.scSubChapterNumber }} {{ scsubchapter.title }}</h4>
+                      {% endfor %}
+                    </div>
+                    {{ form.tailContent(class="form-control form-control-alternative og-content", type="text", id="input-tail-content", placeholder="章节尾部内容") }}
+                    <div id="editor-2" cols="30" rows="10"></div>
+                {% endif %}
+            </div>
+            <div class="card-footer py-4">
+                <div class="text-right">
+                    <a href="{{ url_for('articles.single_article', article_id=article.id) }}" class="btn btn-success">返回卡片列表</a>
+                    <button type="button" class="btn btn-primary confirm">确认修改</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+{% endblock content%}

@@ -1,0 +1,57 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2" data-toc-skip>论文格式与导出</h3>
+                    <small class="text-muted">支持文档</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div> <!-- End of Card Header -->
+            <div class="card-body pt-2">
+                <div class="row">
+                    <div class="col-md-9" id="main-doc">
+
+                        <h2 class="mt-0 mb-4" id="1">如何修改论文格式？</h2>
+                        <p class="text-muted mb-2">如果用户需要修改新建论文时所确定下的论文基本信息，可以在论文列表对应的论文条目右侧操作栏点击蓝色齿轮图标，进入修改页面。和新建时一样，用户可以打开高级模式进行详细设置。</p>
+                        <img src="{{ url_for('static', filename='img/doc/article_settings.png') }}" class="rounded" alt="">
+                        <h3 class="mt-3 mb-2" id="2">致谢辞签名</h3>
+                        <p class="text-muted mb-2">用户可以在“我的信息”页面添加签名文件，请上传透明或白色底色的png格式图片。如果用户上传了签名文件，系统将会在致谢辞的末尾自动添加上签名。关于签名文件的隐私问题，可参见注册页面的隐私声明。也可以选择生成文档后修改签名为其他图片文件，原签名文件会被覆写。代码Github开源，可查阅。</p>
+                        <img src="{{ url_for('static', filename='img/doc/add_signature.png') }}" class="rounded" alt="">
+
+                        <h2 class="mt-5 mb-4" id="3">如何导出论文？</h2>
+                        <h3 class="mt-3 mb-2" id="4">预览论文</h3>
+                        <p class="text-muted mb-2">在撰写论文的途中，用户可以随时在论文列表对应的论文条目右侧操作栏点击蓝色眼睛图标，稍待片刻后，系统会生成文件并自动下载。下载的文件名将会是“preview.docx”。</p>
+                        <img src="{{ url_for('static', filename='img/doc/preview_thesis.png') }}" class="rounded" alt="">
+                        <h3 class="mt-3 mb-2" id="5">标记完成</h3>
+                        <p class="text-muted mb-2">通过点击论文列表对应的论文条目右侧操作栏内的绿色完成按钮，系统将会最后一次生成论文文档，并将论文标记为已完成。标记完成后，论文将无法被编辑，强行输入编辑地址会被弹出。<strong class="text-warning">Alpha测试0.1.1版：其实程序猿没啥必要做这个功能，但是觉得强迫症看着绿色的“已完成”会比较舒服。而程序猿本身也是个强迫症，所以既然标记了已完成就绝不会让你进去编辑【手动微笑。</strong></p>
+                        <p class="text-muted mb-2">标记完成之后，操作栏按钮会改变，最右侧会出现绿色的下载按钮，链接到论文终稿文件，文件名即为论文标题。如果论文标题中有文件名非法字符，如冒号，将替换为下划线。如果用户手滑点错了导致标记完成，请点击橙色的棒槌按钮，然后在手边找一个棒槌敲自己一下。</p>
+
+                        <h2 class="mt-5 mb-4" id="6">如何删除论文？</h2>
+                        <p class="text-muted mb-2">在论文被标记完成之后，操作栏按钮会改变，最左侧会出现红色的删除按钮。点按后经过用户确认，将会删除服务器本地及数据库中关于该论文的所有信息，无法找回。</p>
+                        <img src="{{ url_for('static', filename='img/doc/delete_article.png') }}" class="rounded" alt="">
+                    
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sticky-top toc-container">
+                            <h4 class="mb-3">文章导航</h4>
+                            <nav id="toc"></nav>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div> <!-- End of Card Body -->
+
+          </div>
+        </div>
+      </div>
+
+{% endblock content%}

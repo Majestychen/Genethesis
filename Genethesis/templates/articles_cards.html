@@ -1,0 +1,231 @@
+{% extends 'layout_in.html' %}
+{% block modal %}
+<div class="cardModal">
+        <div class="cardModal-overlay"></div>
+        <div class="card-deck">
+        {% for chapter in article.chapters|sort(attribute='chapterNumber') %}
+        <div class="cardContainer card inactive chapter-{{chapter.chapterNumber}} direct-link" data-link="{{ url_for('articles.edit_chapter', chapter_id=chapter.id) }}">
+            <div class="flippingCard">
+                <div class="side front bg-dark-green">
+                    <div class="cardTitle bg-lighter"><span class="cpNumber text-dark-green">{{ chapter.chapterNumber }}</span></div>
+                    <div class="info">
+                            <h2 class="text-white">章节标题</h2>
+                            <p class="text-white">{{ chapter.title }}</p>
+                            <h2 class="text-white">最后编辑</h2>
+                            <p class="text-white">{{ chapter.timeEdited.strftime('%Y年%m月%d日 %k:%M') }}</p>
+                    </div>
+                </div>
+                <div class="side back">
+                    <div class="info">
+                        <p class="text-white">{{ chapter.content | getHTML | safe | truncate(500) }}</p>
+                        <div class="btn">
+                            <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% for subchapter in chapter.subChapters|sort(attribute='subChapterNumber') %}
+                <div class="cardContainer card inactive chapter-{{chapter.chapterNumber}} direct-link" data-link="{{ url_for('articles.edit_subchapter', subchapter_id=subchapter.id) }}">
+                    <div class="flippingCard">
+                        <div class="side front bg-red">
+                            <div class="cardTitle bg-lighter"><span class="cpNumber text-red">{{ chapter.chapterNumber }}.{{ subchapter.subChapterNumber }}</span></div>
+                            <div class="info">
+                                    <h2 class="text-white">章节标题</h2>
+                                    <p class="text-white">{{ subchapter.title }}</p>
+                                    <h2 class="text-white">最后编辑</h2>
+                                    <p class="text-white">{{ subchapter.timeEdited.strftime('%Y年%m月%d日 %k:%M') }}</p>
+                            </div>
+                        </div>
+                        <div class="side back">
+                            <div class="info">
+                                <p class="text-white">{{ subchapter.content | getHTML | safe | truncate(500) }}</p>
+                                <div class="btn">
+                                    <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for scsubchapter in subchapter.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                    <div class="cardContainer card inactive chapter-{{chapter.chapterNumber}} direct-link" data-link="{{ url_for('articles.edit_scsubchapter', scsubchapter_id=scsubchapter.id) }}">
+                        <div class="flippingCard">
+                            <div class="side front bg-dark-blue">
+                                <div class="cardTitle bg-lighter"><span class="cpNumber text-dark-blue">{{ chapter.chapterNumber }}.{{ subchapter.subChapterNumber }}.{{ scsubchapter.scSubChapterNumber }}</span></div>
+                                <div class="info">
+                                        <h2 class="text-white">章节标题</h2>
+                                        <p class="text-white">{{ scsubchapter.title }}</p>
+                                        <h2 class="text-white">最后编辑</h2>
+                                        <p class="text-white">{{ scsubchapter.timeEdited.strftime('%Y年%m月%d日 %k:%M') }}</p>
+                                </div>
+                            </div>
+                            <div class="side back">
+                                <div class="info">
+                                    <p class="text-white">{{ scsubchapter.content | getHTML | safe | truncate(500) }}</p>
+                                    <div class="btn">
+                                        <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    </div>
+{% endblock modal %}
+
+    
+{% block content %}
+
+
+
+<div class="container-fluid mt--7">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="mb-2">{{ article.title }} 的所有卡片</h3>
+                            <small class="hidden" id="articleID">{{ article_id }}</small>
+                        </div>
+                    </div>
+                    <hr class="mt-3 mb-0">
+                </div>
+                <div class="card-body pt-2 masterCard card-deck">
+
+                        <div class="cardContainer card inactive mb-4 direct-link" data-link="{{ url_for('articles.edit_abstract', article_id=article.id) }}">
+                            <div class="flippingCard">
+                                <div class="side front bg-indigo">
+                                    <div class="cardTitle bg-lighter"><span class="text-indigo">摘要</span></div>
+                                    <div class="info">
+                                        <h2 class="text-white">语言设置</h2>
+                                        {% if article.abstract2Toggle %}
+                                            <p class="text-white">这是一篇双语摘要。</p>
+                                        {% else %}
+                                            <p class="text-white">这是一篇单语言摘要。</p>
+                                        {% endif %}
+                                        <h2 class="text-white">字数统计</h2>
+                                        {% if article.abstract2Toggle %}
+                                            <p class="text-white">第一语言摘要：{{ article.abstract1 | getRawCountWithClass }}<br/>第二语言摘要：{{ article.abstract2 | getRawCountWithClass }}</p>
+                                        {% else %}
+                                            <p class="text-white">{{ article.abstract1 | getRawCountWithClass }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="side back">
+                                    <div class="info">
+                                        <p class="text-white">{{ article.abstract1 | getHTML | safe | truncate(30) }}</p>
+                                        {% if article.abstract2Toggle %}
+                                        <p class="text-white">{{ article.abstract2 | getHTML | safe | truncate(200) }}</p>
+                                        {% endif %}
+                                        <div class="btn">
+                                            <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cardContainer card inactive mb-4 direct-link" data-link="{{ url_for('articles.edit_introduction', article_id=article.id) }}">
+                            <div class="flippingCard">
+                                <div class="side front bg-orange">
+                                    <div class="cardTitle bg-lighter"><span class="text-orange">引入</span></div>
+                                    <div class="info">
+                                        <h2 class="text-white">字数统计</h2>
+                                        <p class="text-white">目前引入部分的总字数为{{ article.introduction | getRawCountWithClass }}。</p>
+                                    </div>
+                                </div>
+                                <div class="side back">
+                                    <div class="info">
+                                        <p class="text-white">{{ article.introduction | getHTML | safe | truncate(500) }}</p>
+                                        <div class="btn">
+                                            <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for chapter in article.chapters|sort(attribute='chapterNumber') %}
+                            {% if chapter.subChapters %}
+                                <div class="cardContainer card inactive mb-4" data-chapter="{{ chapter.chapterNumber }}">
+                                    <div class="stackedCard">
+                                        <div class="stackEffect"></div>
+                            {% else %}
+                                <div class="cardContainer card inactive direct-link" data-link="{{ url_for('articles.edit_chapter', chapter_id=chapter.id) }}">
+                                    <div class="flippingCard">
+                            {% endif %}
+                                        <div class="side front bg-dark-green">
+                                            <div class="cardTitle bg-lighter"><span class="cpNumber text-dark-green">{{ chapter.chapterNumber }}</span></div>
+                                            <div class="info">
+                                                    <h2 class="text-white">章节标题</h2>
+                                                    <p class="text-white">{{ chapter.title }}</p>
+                                                    <h2 class="text-white">字数统计（参考）</h2>
+                                                    <p class="text-white">{{ chapter | getWordCount }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="side back">
+                                            <div class="info">
+                                                <p class="text-white">{{ chapter.content | getHTML | safe | truncate(500) }}</p>
+                                                <div class="btn">
+                                                    <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endfor %}
+
+                        <div class="cardContainer card inactive mb-4 direct-link" data-link="{{ url_for('articles.edit_bibliography', article_id=article.id) }}">
+                            <div class="flippingCard">
+                                <div class="side front bg-coffee">
+                                    <div class="cardTitle bg-lighter"><span class="text-coffee">文献</span></div>
+                                    <div class="info">
+                                        <h2 class="text-white">数据统计</h2>
+                                        <p class="text-white">本论文目前共有参考文献 {{ article.bibliography | getLineCount }} 篇。</p>
+                                    </div>
+                                </div>
+                                <div class="side back">
+                                    <div class="info">
+                                        <p class="text-white">{{ article.bibliography | getHTML | safe | truncate(300) }}</p>
+                                        <div class="btn">
+                                            <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cardContainer card inactive mb-4 direct-link" data-link="{{ url_for('articles.edit_gratitude', article_id=article.id) }}">
+                            <div class="flippingCard">
+                                <div class="side front bg-dark-scarlet">
+                                    <div class="cardTitle bg-lighter"><span class="text-dark-scarlet">致谢</span></div>
+                                    <div class="info">
+                                        <h2 class="text-white">字数统计</h2>
+                                        <p class="text-white">目前致谢辞的总字数为{{ article.gratitude | getRawCountWithClass }}。</p>                                    </div>
+                                </div>
+                                <div class="side back">
+                                    <div class="info">
+                                        <p class="text-white">{{ article.gratitude | getHTML | safe | truncate(300) }}</p>
+                                        <div class="btn">
+                                            <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="card-footer py-4 text-right">
+                    <button type="button" class="btn btn-primary articles-action preview"
+                        data-id="{{ article.id }}">预览文章</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content%}

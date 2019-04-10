@@ -1,0 +1,61 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2" data-toc-skip>插图管理功能使用</h3>
+                    <small class="text-muted">支持文档</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div> <!-- End of Card Header -->
+            <div class="card-body pt-2">
+                <div class="row">
+                    <div class="col-md-9" id="main-doc">
+
+                        <h2 class="mt-0 mb-4" id="1">插图列表</h2>
+                        <p class="text-muted mb-2">在登陆后，即可在左侧的边栏中点击“插图管理”，进入该用户所有插图的列表。插图将会以瀑布流的形式展示，默认展示前12张，点击下方“加载更多”按钮后，加载接下来的12张，如果未显示的图片不足12张，系统将展示所有图片。</p>
+                        <p class="text-muted mb-0">点击列表中的某一张图片，即可以幻灯片的形式放大观看，同时页面底部会显示文件名。</p>
+                        <img src="{{ url_for('static', filename='img/doc/illustrations_list.png') }}" class="rounded" alt="">
+                        
+                        <h2 class="mt-5 mb-4" id="2">插图上传</h2>
+                        <p class="text-muted mb-2">点击列表卡片右上角的“上传插图”按钮，即可从本地选择图片上传。<strong class="text-warning">Alpha测试0.0.5版：尽管设计狮想得很美，程序猿也做出了所有需要的功能，但本人吃土买不起大服务器，所以请不要上传大图片（服务器如果没炸会压缩），一次也不要上传太多，否则服务器要炸。</strong></p>
+                        <p class="text-muted mb-2">上传后的图片将会保留原文件名，以便之后搜索。如果文件名中有空格，将会被替换为下划线。如果同一用户已经上传过同名图片文件，系统将在新图片文件名后生成随机8位代码，这将不会影响搜索。</p>
+                       
+                        <h2 class="mt-5 mb-2" id="3">插图搜索</h2>
+                        <p class="text-muted mb-0">在插图管理页面，顶端搜索栏的功能将会被替换为图片筛选。只需输入一段字符串，系统会自动根据文件名搜索所有图片，并展示最多前12张。更多图片请点击“加载更多”显示。</p>
+                        <img class="mb-0 pb-0" src="{{ url_for('static', filename='img/doc/search_image.png') }}" class="rounded" alt="">
+
+                        <h2 class="mt-5 mb-2" id="4">获取插图链接</h2>
+                        <p class="text-muted mb-2">在每张插图缩略图的右上角，均有两个灰色小图标，上侧的即为获取插图链接的按钮。点按之后，链接将会被复制到剪贴板。请注意，该链接并非外链。</p>
+                        <p class="text-muted mb-2">复制链接后，请点击章节编辑器的添加插图按钮，根据弹出的界面进行操作，以便将插图成功添加到文档中。</p>
+
+                        <h2 class="mt-5 mb-2" id="5">插图删除</h2>
+                        <p class="text-muted mb-2">在每张插图缩略图的右上角，均有两个灰色小图标，下侧的即为删除插图的按钮。点按之后，系统会发出确认信息。经过用户确认之后，图片将被删除。</p>
+                        <img class="mb-2 pb-2" src="{{ url_for('static', filename='img/doc/delete_image.png') }}" class="rounded" alt="">
+
+
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sticky-top toc-container">
+                            <h4 class="mb-3">文章导航</h4>
+                            <nav id="toc"></nav>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div> <!-- End of Card Body -->
+
+          </div>
+        </div>
+      </div>
+
+{% endblock content%}

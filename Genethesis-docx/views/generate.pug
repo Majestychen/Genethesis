@@ -1,0 +1,15 @@
+html
+  head
+    title= article.authorID
+  body
+    each chapter in article.chapters
+        li= chapter.title
+        p= chapter.content
+        each subchapter in chapter.subChapters
+            li(style="padding-left:30px")= subchapter.title
+            p(style="padding-left:30px")= subchapter.content
+            each scsubchapter in subchapter.scSubChapters
+                li(style="padding-left:60px")= scsubchapter.title
+                p(style="padding-left:60px")= scsubchapter.content
+            p(style="padding-left:30px")= subchapter.tailContent
+        p= chapter.tailContent

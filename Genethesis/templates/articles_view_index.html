@@ -1,0 +1,33 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-12">
+                    <h3 class="mb-2">论文目录浏览（开发用）</h3>
+                    <small class="hidden" id="articleID">{{ article_id }}</small>
+                </div>
+              </div>
+              <hr class="mt-3 mb-0">
+            </div>
+            <div class="card-body pt-2">
+                {% for chapter in article.chapters|sort(attribute='chapterNumber') %}
+                    <p>{{ chapter.chapterNumber }} {{ chapter.title }}</p>
+                    {% for subchapter in chapter.subChapters|sort(attribute='subChapterNumber') %}
+                        <p class="ml-3">{{ subchapter.subChapterNumber }} {{ subchapter.title }}</p>
+                        {% for scsubchapter in subchapter.scSubChapters|sort(attribute='scSubChapterNumber') %}
+                            <p class="ml-5">{{ scsubchapter.scSubChapterNumber }} {{ scsubchapter.title }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="card-footer py-4">
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock content%}

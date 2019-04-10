@@ -1,0 +1,103 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-8">
+                    <h3 class="mb-0">我的所有论文 ({{ articles.count() }})</h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href="{{ url_for('articles.new') }}" class="btn btn-primary btn-sm">新建论文</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">论文标题</th>
+                    <th scope="col">状态</th>
+                    <th scope="col">语言</th>
+                    <th scope="col">导师</th>
+                    <th scope="col">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for article in articles %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                        {% if article.status == True %}
+                          <span class="mb-0 text-sm text-dark">{{ article.title }}</span>
+                        {% else %}
+                          <a href="{{ url_for('articles.single_article', article_id=article.id) }}" class="text-dark"><span class="mb-0 text-sm">{{ article.title }}</span></a>
+                        {% endif %}
+                        </div>
+                      </div>
+                    </th>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        {% if article.status == True %}
+                          <i class="bg-success"></i> 已完成
+                        {% else %}
+                          <i class="bg-danger"></i> 未完成
+                        {% endif %}
+                      </span>
+                    </td>
+                    <td>
+                        {% if article.language == 'es' %}西班牙语{% endif %}
+                        {% if article.language == 'zh' %}中文{% endif %}
+                    </td>
+                    <td>
+                        {{ article.tutor }}
+                    </td>
+                    <td>
+                        {% if article.status == True %}
+                          <button class="btn-none articles-action delete pr-2 pl-0" data-id="{{ article.id }}"><i class="fas fa-trash-alt text-danger"></i></button>
+                          <a href="{{ url_for('articles.revitalize', article_id=article.id) }}" class="articles-action restore pr-2"><i class="fas fa-gavel text-warning"></i></a>
+                          <a href="{{ url_for('static', filename='articles/'+current_user.id|string+'/'+article.id|string+'thesis.docx') }}" download="{{ article.title+'.docx' }}" class="articles-action download pr-2"><i class="fas fa-cloud-download-alt text-success"></i></a>
+                        {% else %}
+                          <a href="{{ url_for('articles.finalize', article_id=article.id) }}" class="articles-action finalize pr-2"><i class="fas fa-check-circle text-success"></i></a>
+                          <a href="{{ url_for('articles.edit_settings', article_id=article.id) }}" class="articles-action settings pr-2"><i class="fas fa-cog text-primary"></i></a>
+                          <a href="{{ url_for('articles.single_article', article_id=article.id) }}" class="articles-action write pr-2"><i class="fas fa-pen-nib text-primary"></i></a>
+                          <button class="btn-none articles-action preview pr-2 pl-0" data-id="{{ article.id }}"><i class="fas fa-eye text-primary" data-id="{{ article.id }}"></i></button>
+                        {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer py-4">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock content%}

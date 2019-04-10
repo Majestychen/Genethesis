@@ -1,0 +1,253 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="mb-2">参考书目编辑</h3>
+                                <small class="text-muted">论文 <strong><a href="{{ url_for('articles.single_article', article_id=article.id) }}">{{ article.title }}</a></strong></small>
+                            </div>
+                        </div>
+                        <hr class="mt-3 mb-0">
+                    </div>
+                    <div class="card-body pt-2">
+                        {{ form.hidden_tag() }}
+                        <small class="text-muted">参考书目<strong>一行一条，不含序号</strong>。可以自行输入，也可以通过下方的小工具自动生成。</small>
+                        {{ form.content(class="form-control form-control-alternative mt-3", type="text", id="input-content") }}
+                        <div class="generate-bibliography">
+                            <h4 class="mt-4 mb-4">添加新条目</h4>
+                            <div class="row">
+                                <div class="col-2">
+                                    <input class="reference-kind mb-3" type="radio" name="referenceKind" value="book" checked><span class="pl-2">著作</span><br>
+                                    <input class="reference-kind mb-3" type="radio" name="referenceKind" value="mag"><span class="pl-2">期刊</span><br>
+                                    <input class="reference-kind mb-3" type="radio" name="referenceKind" value="comp"><span class="pl-2">会议论文集</span><br>
+                                    <input class="reference-kind mb-3" type="radio" name="referenceKind" value="elec"><span class="pl-2">电子文献</span><br>
+                                </div>
+                                <div class="col-2">
+                                    <input class="reference-kind mb-3" type="radio" name="language" value="zh" checked><span class="pl-2">中文</span><br>
+                                    <input class="reference-kind mb-3" type="radio" name="language" value="nzh"><span class="pl-2">非中文</span><br>
+                                    <button type="button" class="btn btn-secondary btn-lg mt-2" id="add-entry">添加条目</button>
+                                </div>
+                                <div class="col-8 input-master">
+                                    <div class="zh">
+                                        <div class="book">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="著作标题">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author"  placeholder="作者姓名">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-translator"  placeholder="译者姓名">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="出版年份">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city"  placeholder="出版城市">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher"  placeholder="出版社">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mag hidden">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="文章标题">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author"  placeholder="作者姓名">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-magname"  placeholder="期刊名">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="期刊年份">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-num"  placeholder="期刊号">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-page"  placeholder="登载页码">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city mb-3"  placeholder="出版城市">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher mb-3"  placeholder="出版社">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comp hidden pb-3">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="文章标题">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author"  placeholder="作者姓名">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-compname"  placeholder="文集名">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-compauthor"  placeholder="文集编者">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-page"  placeholder="登载页码">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="年份">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city"  placeholder="出版城市">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher"  placeholder="出版社">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elec hidden">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="文章标题">
+                                            <div class="row mb-3">
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-website"  placeholder="网站名称">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="出版年份">
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control form-control-alternative input-link mb-3"  placeholder="网页链接">
+                                        </div>
+                                    </div>
+                                    <div class="nzh">
+                                        <div class="book hidden">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="Monograph title">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-fn"  placeholder="Author first name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-ln"  placeholder="Author last name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="Year">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city"  placeholder="City">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher"  placeholder="Publisher">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mag hidden">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="Article title">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-fn"  placeholder="Author first name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-ln"  placeholder="Author last name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-magname"  placeholder="Journal title">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="Year">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-num"  placeholder="Serial Number">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-page"  placeholder="Page(s)">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city mb-3"  placeholder="City">
+                                                </div>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher mb-3"  placeholder="Publisher">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="comp hidden pb-3">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="Article title">
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-fn"  placeholder="Author first name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-author-ln"  placeholder="Author last name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-compname"  placeholder="Compilation title">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-compauthor-fn"  placeholder="Compilation author first name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-compauthor-ln"  placeholder="Compilation author last name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-page"  placeholder="Page(s)">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="Year">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-city"  placeholder="City">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-publisher"  placeholder="Publisher">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="elec hidden">
+                                            <input type="text" class="form-control form-control-alternative input-title mb-3"  placeholder="Article title">
+                                            <div class="row mb-3">
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control form-control-alternative input-website"  placeholder="Website name">
+                                                </div>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control form-control-alternative input-year"  placeholder="Year">
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control form-control-alternative input-link mb-3"  placeholder="Link">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer py-4">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary confirm-index">确认修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% endblock content%}

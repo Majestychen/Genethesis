@@ -1,0 +1,59 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+<form action="" method="POST" class="content-form">
+<div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row">
+                <div class="col-8">
+                    <h3 class="mb-2">摘要编辑</h3>
+                    <small class="text-muted">论文 <strong><a href="{{ url_for('articles.single_article', article_id=article.id) }}">{{ article.title }}</a></strong></small>
+                </div>
+                <div class="col-4 text-right">
+                    <label class="switch">
+                      {{ form.toggle(class="input-toggle", id="input-toggle") }}
+                      <span class="slider round"></span>
+                    </label>
+                    <h5 class="mb-0 pb-0 text-sm">双语摘要</h5>
+                </div>
+              </div>
+              <hr class="mt-2 mb-0">
+            </div>
+            <div class="card-body pt-2">
+                {{ form.hidden_tag() }}
+                <h4>摘要（中文）</h4>
+                {{ form.abstract1(class="form-control form-control-alternative og-content", type="text", id="input-abstract1") }}
+                <div id="editor-1" cols="30" rows="10"></div>
+                {% if article.abstract2Toggle == True %}
+                  <div id="abstract-2">
+                {% else %}
+                  <div id="abstract-2" class="no-display">
+                {% endif %}
+                    <h4 class="mt-4" id="input-abstract2-label">摘要（西语）</h4>
+                    {{ form.abstract2(class="form-control form-control-alternative mt-3 og-content", type="text", id="input-abstract2") }}
+                    <div id="editor-2" cols="30" rows="10"></div>
+                  </div>
+              </div>
+            <div class="card-footer py-4">
+                <div class="text-right">
+                    <a href="{{ url_for('articles.single_article', article_id=article.id) }}" class="btn btn-success">返回卡片列表</a>
+                    <button type="button" class="btn btn-primary confirm">确认修改</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+<script>
+  document.getElementById("input-toggle").addEventListener('change', function(){
+    document.getElementById("abstract-2").classList.toggle("no-display");
+  });
+</script>
+  
+
+{% endblock content%}

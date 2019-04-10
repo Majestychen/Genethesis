@@ -1,0 +1,559 @@
+{% extends 'layout_in.html' %}
+
+{% block content %}
+
+<div class="container-fluid mt--7">
+        <div class="row">
+          <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+              <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <h3 class="mb-2">论文设置</h3>
+                    <small class="text-muted">在Alpha测试阶段，系统已经内置了南大金陵西语系双语论文的格式要求，只需选择语言即可。如果有特殊需求，可以打开高级模式，自定义文档样式。</small>
+                  </div>
+                  <div class="col-4 text-right">
+                        <label class="switch">
+                          <input type="checkbox" class="input-toggle" id="pro-mode-toggle">
+                          <span class="slider round"></span>
+                        </label>
+                        <h5 class="mb-0 pb-0 text-sm">高级模式</h5>
+                    </div>
+                </div>
+              </div>
+              <div class="card-body">
+              <form role="form" action="" method="POST">
+                  {{ form.hidden_tag() }}
+                  <h6 class="heading-small text-muted mb-4">论文基本信息</h6>
+                  <div class="pl-lg-4">
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-title">标题</label>
+                          {% if form.title.errors %}
+                              {{ form.title(class="form-control form-control-alternative is-invalid", placeholder="论文标题",type="text", id="input-title") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.title.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.title(class="form-control form-control-alternative", placeholder="论文标题", type="text", id="input-title") }}
+                          {% endif %}                      
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          {{ form.titleAlt.label(class="form-control-label", for="input-titleAlt") }}
+                          {% if form.titleAlt.errors %}
+                              {{ form.titleAlt(class="form-control form-control-alternative is-invalid", placeholder="论文第二语言标题",type="text", id="input-titleAlt") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.titleAlt.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.titleAlt(class="form-control form-control-alternative", placeholder="论文第二语言标题", type="text", id="input-titleAlt") }}
+                          {% endif %}                      
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-tutor">导师</label>
+                          {% if form.tutor.errors %}
+                              {{ form.tutor(class="form-control form-control-alternative is-invalid", placeholder="导师姓名",type="text", id="input-tutor") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.tutor.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.tutor(class="form-control form-control-alternative", placeholder="导师姓名", type="text", id="input-tutor") }}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-language">语言</label>
+                          {% if form.language.errors %}
+                              {{ form.language(class="form-control form-control-alternative is-invalid", placeholder="论文语言",type="text", id="input-language") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.language.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.language(class="form-control form-control-alternative", placeholder="论文语言", type="text", id="input-language") }}
+                          {% endif %}                      
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          {{ form.keywords.label(class="form-control-label") }}
+                          {% if form.keywords.errors %}
+                              {{ form.keywords(class="form-control form-control-alternative is-invalid", placeholder="关键词1, 关键词2, 关键词3...",type="text", id="input-keywords") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.keywords.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.keywords(class="form-control form-control-alternative", placeholder="关键词1, 关键词2, 关键词3...", type="text", id="input-keywords") }}
+                          {% endif %}                      
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          {{ form.keywordsAlt.label(class="form-control-label") }}
+                          {% if form.keywordsAlt.errors %}
+                              {{ form.keywordsAlt(class="form-control form-control-alternative is-invalid", placeholder="关键词1, 关键词2, 关键词3...",type="text", id="input-keywordsAlt") }}
+                              <div class="invalid-feedback">
+                                  {% for error in form.keywordsAlt.errors %}
+                                      <span>{{ error }}</span>
+                                  {% endfor %}
+                              </div>
+                          {% else %}
+                              {{ form.keywordsAlt(class="form-control form-control-alternative", placeholder="关键词1, 关键词2, 关键词3...", type="text", id="input-keywordsAlt") }}
+                          {% endif %}                      
+                        </div>
+                      </div>
+                    </div>
+  
+
+                    
+                  </div>
+                <hr class="my-4" />
+                <div id="pro-mode" class="no-display">
+
+                <h6 class="heading-small text-muted mb-4">页边距设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form.marginTop.label(class="form-control-label") }}
+                                {{ form.marginTop(class="form-control form-control-alternative", id="input-marginTop") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form.marginBottom.label(class="form-control-label") }}
+                                {{ form.marginBottom(class="form-control form-control-alternative", id="input-marginBottom") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form.marginLeft.label(class="form-control-label") }}
+                                {{ form.marginLeft(class="form-control form-control-alternative", id="input-marginLeft") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form.marginRight.label(class="form-control-label") }}
+                                {{ form.marginRight(class="form-control form-control-alternative", id="input-marginRight") }}                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">字体设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.innerCoverFont.label(class="form-control-label") }}
+                                {{ form.innerCoverFont(class="form-control form-control-alternative", id="input-innerCoverFont") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.innerCoverFontAlt.label(class="form-control-label") }}
+                                {{ form.innerCoverFontAlt(class="form-control form-control-alternative", id="input-innerCoverFontAlt") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.sectionTitleFont.label(class="form-control-label") }}
+                                {{ form.sectionTitleFont(class="form-control form-control-alternative", id="input-sectionTitleFont") }}                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.sectionTitleFontAlt.label(class="form-control-label") }}
+                                {{ form.sectionTitleFontAlt(class="form-control form-control-alternative", id="input-sectionTitleFontAlt") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractFont.label(class="form-control-label") }}
+                                {{ form.abstractFont(class="form-control form-control-alternative", id="input-abstractFont") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractFontAlt.label(class="form-control-label") }}
+                                {{ form.abstractFontAlt(class="form-control form-control-alternative", id="input-abstractFontAlt") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.tocFont.label(class="form-control-label") }}
+                                {{ form.tocFont(class="form-control form-control-alternative", id="input-tocFont") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.titleFont.label(class="form-control-label") }}
+                                {{ form.titleFont(class="form-control form-control-alternative", id="input-titleFont") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyFont.label(class="form-control-label") }}
+                                {{ form.bodyFont(class="form-control form-control-alternative", id="input-bodyFont") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.noteFont.label(class="form-control-label") }}
+                                {{ form.noteFont(class="form-control form-control-alternative", id="input-noteFont") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bibliographyFont.label(class="form-control-label") }}
+                                {{ form.bibliographyFont(class="form-control form-control-alternative", id="input-bibliographyFont") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bibliographyFontAlt.label(class="form-control-label") }}
+                                {{ form.bibliographyFontAlt(class="form-control form-control-alternative", id="input-bibliographyFontAlt") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.imageCommentFont.label(class="form-control-label") }}
+                                {{ form.imageCommentFont(class="form-control form-control-alternative", id="input-imageCommentFont") }}  
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">字号设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.innerCoverFontSize.label(class="form-control-label") }}
+                                {{ form.innerCoverFontSize(class="form-control form-control-alternative", id="input-innerCoverFontSize") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.sectionTitleFontSize.label(class="form-control-label") }}
+                                {{ form.sectionTitleFontSize(class="form-control form-control-alternative", id="input-sectionTitleFontSize") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractFontSize.label(class="form-control-label") }}
+                                {{ form.abstractFontSize(class="form-control form-control-alternative", id="input-abstractFontSize") }}                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc1FontSize.label(class="form-control-label") }}
+                                {{ form.toc1FontSize(class="form-control form-control-alternative", id="input-toc1FontSize") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc2FontSize.label(class="form-control-label") }}
+                                {{ form.toc2FontSize(class="form-control form-control-alternative", id="input-toc2FontSize") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc3FontSize.label(class="form-control-label") }}
+                                {{ form.toc3FontSize(class="form-control form-control-alternative", id="input-toc3FontSize") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title1FontSize.label(class="form-control-label") }}
+                                {{ form.title1FontSize(class="form-control form-control-alternative", id="input-title1FontSize") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title2FontSize.label(class="form-control-label") }}
+                                {{ form.title2FontSize(class="form-control form-control-alternative", id="input-title2FontSize") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title3FontSize.label(class="form-control-label") }}
+                                {{ form.title3FontSize(class="form-control form-control-alternative", id="input-title3FontSize") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyFontSize.label(class="form-control-label") }}
+                                {{ form.bodyFontSize(class="form-control form-control-alternative", id="input-bodyFontSize") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.noteFontSize.label(class="form-control-label") }}
+                                {{ form.noteFontSize(class="form-control form-control-alternative", id="input-noteFontSize") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bibliographyFontSize.label(class="form-control-label") }}
+                                {{ form.bibliographyFontSize(class="form-control form-control-alternative", id="input-bibliographyFontSize") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.imageCommentFontSize.label(class="form-control-label") }}
+                                {{ form.imageCommentFontSize(class="form-control form-control-alternative", id="input-imageCommentFontSize") }}  
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">行距设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.innerCoverLineSpacing.label(class="form-control-label") }}
+                                {{ form.innerCoverLineSpacing(class="form-control form-control-alternative", id="input-innerCoverLineSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.sectionTitleLineSpacing.label(class="form-control-label") }}
+                                {{ form.sectionTitleLineSpacing(class="form-control form-control-alternative", id="input-sectionTitleLineSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractLineSpacing.label(class="form-control-label") }}
+                                {{ form.abstractLineSpacing(class="form-control form-control-alternative", id="input-abstractLineSpacing") }}                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.tocLineSpacing.label(class="form-control-label") }}
+                                {{ form.tocLineSpacing(class="form-control form-control-alternative", id="input-tocLineSpacing") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title1LineSpacing.label(class="form-control-label") }}
+                                {{ form.title1LineSpacing(class="form-control form-control-alternative", id="input-title1LineSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title2LineSpacing.label(class="form-control-label") }}
+                                {{ form.title2LineSpacing(class="form-control form-control-alternative", id="input-title2LineSpacing") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title3LineSpacing.label(class="form-control-label") }}
+                                {{ form.title3LineSpacing(class="form-control form-control-alternative", id="input-title3LineSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyLineSpacing.label(class="form-control-label") }}
+                                {{ form.bodyLineSpacing(class="form-control form-control-alternative", id="input-bodyLineSpacing") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bibliographyLineSpacing.label(class="form-control-label") }}
+                                {{ form.bibliographyLineSpacing(class="form-control form-control-alternative", id="input-bibliographyLineSpacing") }}  
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">段前后距设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractAfterSpacing.label(class="form-control-label") }}
+                                {{ form.abstractAfterSpacing(class="form-control form-control-alternative", id="input-abstractAfterSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc1BeforeSpacing.label(class="form-control-label") }}
+                                {{ form.toc1BeforeSpacing(class="form-control form-control-alternative", id="input-toc1BeforeSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc2BeforeSpacing.label(class="form-control-label") }}
+                                {{ form.toc2BeforeSpacing(class="form-control form-control-alternative", id="input-toc2BeforeSpacing") }}                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title1AfterSpacing.label(class="form-control-label") }}
+                                {{ form.title1AfterSpacing(class="form-control form-control-alternative", id="input-title1AfterSpacing") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title2AfterSpacing.label(class="form-control-label") }}
+                                {{ form.title2AfterSpacing(class="form-control form-control-alternative", id="input-title2AfterSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title3AfterSpacing.label(class="form-control-label") }}
+                                {{ form.title3AfterSpacing(class="form-control form-control-alternative", id="input-title3AfterSpacing") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyAfterSpacing.label(class="form-control-label") }}
+                                {{ form.bodyAfterSpacing(class="form-control form-control-alternative", id="input-bodyAfterSpacing") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bibliographyAfterSpacing.label(class="form-control-label") }}
+                                {{ form.bibliographyAfterSpacing(class="form-control form-control-alternative", id="input-bibliographyAfterSpacing") }}                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">缩进设置</h6>
+                <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractFirstIndent.label(class="form-control-label") }}
+                                {{ form.abstractFirstIndent(class="form-control form-control-alternative", id="input-abstractFirstIndent") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.abstractLeftIndent.label(class="form-control-label") }}
+                                {{ form.abstractLeftIndent(class="form-control form-control-alternative", id="input-abstractLeftIndent") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc1Indent.label(class="form-control-label") }}
+                                {{ form.toc1Indent(class="form-control form-control-alternative", id="input-toc1Indent") }}                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc2Indent.label(class="form-control-label") }}
+                                {{ form.toc2Indent(class="form-control form-control-alternative", id="input-toc2Indent") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.toc3Indent.label(class="form-control-label") }}
+                                {{ form.toc3Indent(class="form-control form-control-alternative", id="input-toc3Indent") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title1Indent.label(class="form-control-label") }}
+                                {{ form.title1Indent(class="form-control form-control-alternative", id="input-title1Indent") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title2Indent.label(class="form-control-label") }}
+                                {{ form.title2Indent(class="form-control form-control-alternative", id="input-title2Indent") }}  
+                              </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.title3Indent.label(class="form-control-label") }}
+                                {{ form.title3Indent(class="form-control form-control-alternative", id="input-title3Indent") }}                  
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyFirstIndent.label(class="form-control-label") }}
+                                {{ form.bodyFirstIndent(class="form-control form-control-alternative", id="input-bodyFirstIndent") }}  
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form.bodyLeftIndent.label(class="form-control-label") }}
+                                {{ form.bodyLeftIndent(class="form-control form-control-alternative", id="input-bodyLeftIndent") }}                  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                
+                </div>
+  
+                  <div class="text-right">
+                      <button type="submit" class="btn btn-primary btn-lg">确认信息</button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock content%}
