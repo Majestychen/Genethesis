@@ -654,6 +654,8 @@ $('.confirm').on('click', function(e){
         raw = raw.replace(/&nbsp;/g, '')
         raw = raw.replace(/&amp;nbsp;/g, '')
         raw = raw.replace(/&amp;amp;nbsp;/g, '')
+        raw = raw.replace(/&amp;/g, '&')
+        raw = raw.replace(/&amp;amp;/g, '&')
         $(this).val(raw)
     })
     $('.content-form')[0].submit()
