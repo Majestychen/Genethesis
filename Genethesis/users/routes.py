@@ -11,7 +11,6 @@ users = Blueprint('users', __name__)
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        flash(f"你专门在地址栏输入这个地址来测试我们吗？不酷哦。", category='warning')
         return redirect(url_for('users.profile'))
     form = LoginForm()
     if form.validate_on_submit():
@@ -28,7 +27,6 @@ def login():
 @users.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        flash(f"你专门在地址栏输入这个地址来测试我们吗？不酷哦。", category='warning')
         return redirect(url_for('users.profile'))
     form = RegistrationForm()
     if form.validate_on_submit():

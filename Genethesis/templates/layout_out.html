@@ -21,11 +21,31 @@
 </head>
 
 <body class="bg-default">
+    <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="privacyModalLabel">隐私声明</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body pt-0 pb-0">
+                <h3 class="mb-4">致参加Alpha测试的用户们：</h3>
+                <p class="text-muted text-sm">如果我说你们的数据我拿不到，那我是鬼扯，因为无论是文件还是数据库都存在我的服务器上，但是我作为一个在读学生，真的没有利益相关。写这个应用三成是为了自用，三成是为了熟悉Python语言，三成是因为闲着无聊，还有一成是为了证明那个什么维普论文系统简直业余得搞笑。别说科班出身，我这个文科生单枪匹马既当设计狮又当程序猿，这个应用只用了半个月多点。一个专业团队能把系统做成那样，本强迫症实名反对。</p>
+                <p class="text-muted text-sm">但是有一点很重要，就是<strong class="text-red">用户的密码我是拿不到的</strong>。因为整个系统上没有任何地方存储过用户密码的明码，后端一收到，立刻就用Bcrypt做过了hash处理，代码开源，不放心的话可以检查一下users/routes.py文件。所以绝对不用担心我拿你们的用户名和密码去碰别的应用，光拿着hash码是没用的。如果你还是不放心，又觉得一定要用这个系统，所有代码都是开源的，从Github里克隆下来在本地运行也行。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+        </div>
+      </div>
   <div class="main-content">
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
       <div class="container px-4">
-        <a class="navbar-brand" href="../index.html">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">
           <img src="../static/img/brand/white.png" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +56,7 @@
           <div class="navbar-collapse-header d-md-none">
             <div class="row">
               <div class="col-6 collapse-brand">
-                <a href="../index.html">
+                <a href="{{ url_for('main.index') }}">
                   <img src="../static/img/brand/blue.png">
                 </a>
               </div>
@@ -51,7 +71,7 @@
           <!-- Navbar items -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="../index.html">
+              <a class="nav-link nav-link-icon" href="#!" data-toggle="modal" data-target="#privacyModal">
                 <i class="fas fa-question-circle"></i>
                 <span class="nav-link-inner--text">用户须知</span>
               </a>
@@ -69,7 +89,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link nav-link-icon" href="../examples/profile.html">
+              <a class="nav-link nav-link-icon" href="https://github.com/agustindorado95/Genethesis/issues">
                 <i class="fas fa-comment"></i>
                 <span class="nav-link-inner--text">问题反馈</span>
               </a>
@@ -115,13 +135,13 @@
               <a href="https://www.facebook.com/agustindorado95" class="nav-link" target="_blank">Agustín Dorado</a>
             </li>
             <li class="nav-item">
-              <a href="#!" class="nav-link" target="_blank">关于作者</a>
+              <a href="#!" class="nav-link" >关于作者</a>
             </li>
             <li class="nav-item">
-              <a href="#!" class="nav-link" target="_blank">更新说明</a>
+              <a href="#!" class="nav-link" >更新说明</a>
             </li>
             <li class="nav-item">
-              <a href="#!" class="nav-link" target="_blank">源代码</a>
+              <a href="https://github.com/agustindorado95/Genethesis" class="nav-link" target="_blank">源代码</a>
             </li>
           </ul>
         </div>

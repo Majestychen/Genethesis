@@ -17,7 +17,7 @@
                 </div>
                 <div class="side back">
                     <div class="info">
-                        <p class="text-white">{{ chapter.content | getHTML | safe | truncate(500) }}</p>
+                        <p class="text-white">{{ chapter.content | getRaw | truncate(500) }}</p>
                         <div class="btn">
                             <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                         </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="side back">
                             <div class="info">
-                                <p class="text-white">{{ subchapter.content | getHTML | safe | truncate(500) }}</p>
+                                <p class="text-white">{{ subchapter.content | getRaw | truncate(500) }}</p>
                                 <div class="btn">
                                     <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                 </div>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="side back">
                                 <div class="info">
-                                    <p class="text-white">{{ scsubchapter.content | getHTML | safe | truncate(500) }}</p>
+                                    <p class="text-white">{{ scsubchapter.content | getRaw | truncate(500) }}</p>
                                     <div class="btn">
                                         <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                     </div>
@@ -117,9 +117,9 @@
                                 </div>
                                 <div class="side back">
                                     <div class="info">
-                                        <p class="text-white">{{ article.abstract1 | getHTML | safe | truncate(30) }}</p>
+                                        <p class="text-white">{{ article.abstract1 | getRaw | truncate(30) }}</p>
                                         {% if article.abstract2Toggle %}
-                                        <p class="text-white">{{ article.abstract2 | getHTML | safe | truncate(200) }}</p>
+                                        <p class="text-white">{{ article.abstract2 | getRaw | truncate(200) }}</p>
                                         {% endif %}
                                         <div class="btn">
                                             <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="side back">
                                     <div class="info">
-                                        <p class="text-white">{{ article.introduction | getHTML | safe | truncate(500) }}</p>
+                                        <p class="text-white">{{ article.introduction | getRaw | truncate(500) }}</p>
                                         <div class="btn">
                                             <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                         </div>
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="side back">
                                             <div class="info">
-                                                <p class="text-white">{{ chapter.content | getHTML | safe | truncate(500) }}</p>
+                                                <p class="text-white">{{ chapter.content | getRaw | truncate(500) }}</p>
                                                 <div class="btn">
                                                     <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                                 </div>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="side back">
                                     <div class="info">
-                                        <p class="text-white">{{ article.bibliography | getHTML | safe | truncate(300) }}</p>
+                                        <p class="text-white">{{ article.bibliography | getRaw | truncate(300) }}</p>
                                         <div class="btn">
                                             <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                         </div>
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="side back">
                                     <div class="info">
-                                        <p class="text-white">{{ article.gratitude | getHTML | safe | truncate(300) }}</p>
+                                        <p class="text-white">{{ article.gratitude | getRaw | truncate(300) }}</p>
                                         <div class="btn">
                                             <i class="fas fa-pen-nib"></i><h4>开始编辑</h4>
                                         </div>

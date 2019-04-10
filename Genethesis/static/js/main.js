@@ -290,6 +290,7 @@ if (document.getElementById('add-entry')) {
     $('#add-entry').on('click', function(){
         language = $("input[name='language']:checked").val();
         type = $("input[name='referenceKind']:checked").val();
+        console.log(type, language)
         inputMaster = $('.'+language).children('.'+type);
         text = '';
         if (language=='zh'){
@@ -368,7 +369,6 @@ if (document.getElementById('add-entry')) {
                 text = text + ', ' + inputMaster.find('.input-year').val() + ';';
             }
         }
-        console.log(text)
         if ($('#input-content').val()) {
             $('#input-content').append('\n'+text);
         } else {
